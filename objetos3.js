@@ -2,29 +2,37 @@ let filaEspera = {
     clientes: [],
     capacidad: 7,
 
-    agregar(nombre, edad) {
-        if (this.clientes.length < this.capacidad) {
-            let cliente = { nombre, edad };  // Cada cliente es un objeto
-            this.clientes.push(cliente);
+    agregar: function (nombre, edad, id, servicio) {
+        if (filaEspera.clientes.length < filaEspera.capacidad) {
+            let cliente = { 
+                nombre, 
+                edad, 
+                id, 
+                servicio 
+            };
+            filaEspera.clientes.push(cliente);
             console.log(`${nombre} ha sido agregado a la cola.`);
         } else {
             console.log("La cola está llena.");
         }
     },
 
-    atender() {
-        if (this.clientes.length > 0) {
-            let atendido = this.clientes.shift();
-            console.log(`${atendido.nombre} ha sido atendido.`);
+    atender: function () {
+        if (filaEspera.clientes.length > 0) {
+            let atendido = filaEspera.clientes.shift();
+            console.log(`${atendido.nombre} (ID: ${atendido.id}) ha sido atendido para ${atendido.servicio}.`);
         } else {
             console.log("No hay clientes en la cola.");
         }
     },
 
-    mostrarClientes() {
-        if (this.clientes.length > 0) {
+    mostrarClientes: function () {
+        if (filaEspera.clientes.length > 0) {
             console.log("Clientes en la cola:");
-            this.clientes.forEach((c, i) => console.log(`${i + 1}. ${c.nombre} (Edad: ${c.edad})`));
+            for (let i = 0; i < filaEspera.clientes.length; i++) {
+                let c = filaEspera.clientes[i];
+                console.log(`${i + 1}. ${c.nombre} (Edad: ${c.edad}, ID: ${c.id}, Servicio: ${c.servicio})`);
+            }
         } else {
             console.log("La cola está vacía.");
         }
@@ -32,12 +40,12 @@ let filaEspera = {
 };
 
 // Pruebas
-filaEspera.agregar("Juan", 25);
-filaEspera.agregar("Maria", 30);
-filaEspera.agregar("Carlos", 28);
-filaEspera.agregar("Jose", 22);
-filaEspera.agregar("Marina", 35);
-filaEspera.agregar("Eduar", 27);
-filaEspera.agregar("El Gey", 40);
+filaEspera.agregar("Juan", 25, 101, "Consulta médica");
+filaEspera.agregar("Maria", 30, 102, "Trámite bancario");
+filaEspera.agregar("Carlos", 28, 103, "Renovación de licencia");
+filaEspera.agregar("Jose", 22, 104, "Entrega de documentos");
+filaEspera.agregar("Marina", 35, 105, "Asesoría legal");
+filaEspera.agregar("Eduar", 27, 106, "Revisión técnica");
+filaEspera.agregar("El Gey", 40, 107, "Pago de servicios");
 filaEspera.atender();
 filaEspera.mostrarClientes();

@@ -7,32 +7,45 @@ let maquinaExpendedora = {
         { nombre: "Papas Fritas", cantidad: 4 }
     ],
 
-    mostrarInventario() {
+    mostrarInventario: function () {
         console.log("Inventario de la máquina:");
-        this.productos.forEach((producto, i) => {
-            console.log(`${i}. ${producto.nombre} - Cantidad: ${producto.cantidad}`);
-        });
+        let productos = maquinaExpendedora.productos;
+
+        for (let i = 0; i < productos.length; i++) {
+            console.log(`${i}. ${productos[i].nombre} - Cantidad: ${productos[i].cantidad}`);
+        }
     },
 
-    comprarProducto(codigo) {
-        if (codigo < 0 || codigo >= this.productos.length) {
+    comprarProducto: function (codigo) {
+        let productos = maquinaExpendedora.productos;
+
+        if (codigo < 0 || codigo >= productos.length) {
             console.log("Código inválido. Intente de nuevo.");
             return;
         }
 
-        let producto = this.productos[codigo];
+        let producto = productos[codigo];
 
         if (producto.cantidad > 0) {
             console.log(`Producto entregado: ${producto.nombre}`);
             producto.cantidad--;
         } else {
             console.log(`El producto "${producto.nombre}" está agotado.`);
-            this.sugerirProducto();
+            maquinaExpendedora.sugerirProducto();
         }
     },
 
-    sugerirProducto() {
-        let sugerencia = this.productos.find(p => p.cantidad > 0);
+    sugerirProducto: function () {
+        let productos = maquinaExpendedora.productos;
+        let sugerencia = null;
+
+        for (let i = 0; i < productos.length; i++) {
+            if (productos[i].cantidad > 0) {
+                sugerencia = productos[i];
+                break;
+            }
+        }
+
         if (sugerencia) {
             console.log(`Sugerencia: Puede comprar ${sugerencia.nombre}`);
         } else {
